@@ -11,11 +11,11 @@ class Table {
     getOne(id) {
         let sql = `SELECT * FROM ${this.tableName} WHERE id = ${id};`;
         return executeQuery(sql, [id])
-        .then((results) => results[0]);
+            .then((results) => results[0]);
     }
 
     getAll() {
-        let sql = `SELECT * FROM ${this.tableName}`;
+        let sql = `SELECT * FROM ${this.tableName} ORDER BY created DESC`;
         return executeQuery(sql);
     }
 
@@ -35,10 +35,11 @@ class Table {
         let placeholderString = generatePlaceholders(values);
         let sql = `INSERT INTO ${this.tableName} (${columns.join(',')}) VALUES (${placeholderString});`;
         return executeQuery(sql, values)
-        .then((results) => ({id: results.insertId }));
+            .then((results) => ({ id: results.insertId }));
     }
 
     update(id, row) {
+        console.log('--row--', row);
         let columns = Object.keys(row);
         let values = Object.values(row);
         let updates = columns.map((columnName) => {

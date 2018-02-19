@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Formatter from './Formatter';
+import Navbar from './Navbar';
 
 export default class List extends Component {
     constructor(props) {
@@ -20,8 +21,11 @@ export default class List extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <Formatter posts={this.state.posts} />
+            <div>
+                <Navbar />
+                <div className="container">
+                    <Formatter posts={this.state.posts} />
+                </div>
             </div>
         )
     }

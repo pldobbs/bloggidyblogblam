@@ -5,7 +5,6 @@ let router = Router();
 let classTable = new Table('Posts');
 
 router.get('/', (req, res) => {
-    console.log(req.user);
     classTable.getAll()
         .then((results) => {
             res.json(results);
