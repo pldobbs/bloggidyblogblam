@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Formatter from './Formatter';
 import Navbar from './Navbar';
+import * as postsService from '../services/posts';
 
 export default class List extends Component {
     constructor(props) {
@@ -11,10 +12,7 @@ export default class List extends Component {
         }
     }
     componentDidMount() {
-        fetch("http://localhost:3000/api/blogs")
-            .then(res => {
-                return res.json()
-            })
+        postsService.all()
             .then(data => {
                 this.setState({ posts: data })
             })

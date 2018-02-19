@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
+import * as postsService from '../services/posts';
 
 export default class SingleBlog extends Component {
     constructor(props) {
@@ -11,20 +12,14 @@ export default class SingleBlog extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:3000/api/blogs/${this.props.match.params.id}`)
-            .then(res => {
-                return res.json()
-            })
+        postsService.one(this.props.match.params.id)
             .then(data => {
                 this.setState({ blogPost: data })
             })
     }
     handleDelete() {
-        fetch(`http://localhost:3000/api/blogs/${this.props.match.params.id}`, {
-            method: "DELETE"
-        })
-            .then(res => res.json())
-            .then(data => console.log(data))
+        postsService.destroy(this.props.match.params.id)
+            .then(console.log)
     }
     render() {
         let blogPost = this.state.blogPost;

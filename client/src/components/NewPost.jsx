@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar';
+import * as postsService from '../services/posts';
 
 export default class NewPost extends Component {
     constructor(props) {
@@ -28,19 +29,11 @@ export default class NewPost extends Component {
         })
     }
     submitPost() {
-        fetch("http://localhost:3000/api/blogs", {
-            method: "POST",
-            body: JSON.stringify({
-                title: this.state.post.title,
-                content: this.state.post.content
-            }),
-            headers: new Headers({
-                "Content-Type": "application/json"
-            })
+        postsService.insert({
+            title: this.state.post.title,
+            content: this.state.post.content
         })
-            .then(res => res.json())
-            .then(data => console.log(data));
-        window.location = '/blog'
+        this.props.history.replace("/blog");
     }
     render() {
         return (

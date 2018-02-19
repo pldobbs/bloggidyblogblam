@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
+import * as postsService from '../services/posts';
 
 export default class Update extends Component {
     constructor(props) {
@@ -12,10 +13,7 @@ export default class Update extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:3000/api/blogs/${this.props.match.params.id}`)
-            .then(res => {
-                return res.json()
-            })
+        postsService.one(this.props.match.params.id)
             .then(data => {
                 this.setState({ post: data })
             })
@@ -33,29 +31,18 @@ export default class Update extends Component {
         this.setState({
             post: {
                 content: value,
-                value: this.state.post.content,
+                title: this.state.post.title,
                 id: this.state.post.id
             }
         })
     }
     updatePost() {
-        fetch(`http://localhost:3000/api/blogs/${this.props.match.params.id}`, {
-            method: "PUT",
-            body: JSON.stringify({
-                title: this.state.post.title,
-                content: this.state.post.content
-            }),
-            headers: new Headers({
-                "Content-Type": "application/json"
-            })
+        postsService.update(this.props.match.params.id, {
+            title: this.state.post.title,
+            content: this.state.post.content
         })
-            .then(res => {
-                return res.json()
-            })
-            .then(data => {
-                console.log(data)
-            })
-        window.location = `/blog/${this.state.post.id}`
+            .then(console.log)
+        this.props.history.replace(`/blog/${this.state.post.id}`);
     }
     render() {
         return (

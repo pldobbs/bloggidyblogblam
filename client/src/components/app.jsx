@@ -5,6 +5,10 @@ import NewPost from './NewPost';
 import List from './List';
 import SingleBlog from './SingleBlog';
 import Update from './Update';
+import PrivateRoute from './auth/privateRoute';
+import Login from './auth/login';
+import Logout from './auth/logout';
+import AuthButton from './auth/authButton';
 
 
 export default class App extends Component {
@@ -13,12 +17,15 @@ export default class App extends Component {
         return (
             <Router>
                 <Fragment>
+                    <AuthButton />
                     <Switch>
                         <Route exact path="/" component={Welcome} />
                         <Route exact path="/blog" component={List} />
-                        <Route exact path="/write" component={NewPost} />
+                        <Route exact path="/login" component={Login} />
+                        <Route exact path="/logout" component={Logout} />
                         <Route exact path="/blog/:id" component={SingleBlog} />
-                        <Route exact path="/update/:id" component={Update} />
+                        <PrivateRoute exact path="/write" component={NewPost} />
+                        <PrivateRoute exact path="/update/:id" component={Update} />
                     </Switch>
                 </Fragment>
             </Router >
